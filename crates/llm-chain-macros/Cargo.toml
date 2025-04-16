@@ -15,4 +15,4 @@ proc-macro = true
 
 
 [dependencies]
-syn = "2.0.18"
+syn = "2.0.58"
