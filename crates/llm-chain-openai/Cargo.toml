@@ -13,7 +13,7 @@ repository = "https://github.com/sobelio/llm-chain/"
 [features]
 
 [dependencies]
-futures = "0.3.28"
+futures = "0.3.31"
 async-openai = "0.16.2"
 async-trait.workspace = true
 llm-chain = { path = "../llm-chain", version = "0.13.0", default-features = false }
