@@ -24,4 +24,4 @@ milvus-sdk-rust = "0.1.0"
 llm-chain-openai = { path = "../llm-chain-openai" }
 tokio = "1.28.2"
 serde_yaml = "0.9.27"
-rand = "0.8.5"
+rand = "0.9.1"

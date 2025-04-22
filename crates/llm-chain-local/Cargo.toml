@@ -16,7 +16,7 @@ async-trait.workspace = true
 lazy_static.workspace = true
 llm = "0.1.1"
 llm-chain = { path = "../llm-chain", version = "0.13.0", default-features = false }
-rand = "0.8.5"
+rand = "0.9.1"
 serde.workspace = true
 thiserror.workspace = true
 
