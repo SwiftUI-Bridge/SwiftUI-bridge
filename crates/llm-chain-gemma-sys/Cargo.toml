@@ -17,4 +17,4 @@ readme = "README.md"
 [dependencies]
 
 [build-dependencies]
-cc = "1.0.87"
+cc = "1.2.20"
