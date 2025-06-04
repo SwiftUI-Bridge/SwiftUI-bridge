@@ -45,21 +45,35 @@ struct OnDisappearModifier<Content: View>: View {
         defaultAsWidget(children.wrappedChildren, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: OnDisappearModifierChildren,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
-        defaultUpdate(
+        backend: Backend
+    ) -> ViewLayoutResult {
+        defaultComputeLayout(
             widget,
             children: children.wrappedChildren,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: OnDisappearModifierChildren,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        defaultCommit(
+            widget,
+            children: children.wrappedChildren,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }

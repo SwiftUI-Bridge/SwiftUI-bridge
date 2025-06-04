@@ -21,7 +21,7 @@ public class ViewGraph<Root: View> {
     /// change as opposed to a window resizing event).
     private var windowSize: SIMD2<Int>
     /// The current size of the root view.
-    private var currentRootViewResult: ViewUpdateResult
+    private var currentRootViewResult: ViewLayoutResult
 
     /// The environment most recently provided by this node's parent scene.
     private var parentEnvironment: EnvironmentValues
@@ -40,7 +40,7 @@ public class ViewGraph<Root: View> {
         self.view = view
         windowSize = .zero
         parentEnvironment = environment
-        currentRootViewResult = ViewUpdateResult.leafView(size: .empty)
+        currentRootViewResult = ViewLayoutResult.leafView(size: .empty)
         setIncomingURLHandler = backend.setIncomingURLHandler(to:)
     }
 
@@ -52,15 +52,23 @@ public class ViewGraph<Root: View> {
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
         dryRun: Bool
-    ) -> ViewUpdateResult {
+    ) -> ViewLayoutResult {
         parentEnvironment = environment
         windowSize = proposedSize
-        let result = rootNode.update(
-            with: newView ?? view,
-            proposedSize: proposedSize,
-            environment: parentEnvironment,
-            dryRun: dryRun
-        )
+
+        // TODO: Refactor view graph node to be computeLayout+commit based
+        //   instead of update based.
+        let result: ViewLayoutResult
+        if dryRun {
+            result = rootNode.computeLayout(
+                with: newView ?? view,
+                proposedSize: proposedSize,
+                environment: parentEnvironment
+            )
+        } else {
+            result = rootNode.commit()
+        }
+
         self.currentRootViewResult = result
         if isFirstUpdate, !dryRun {
             setIncomingURLHandler { url in

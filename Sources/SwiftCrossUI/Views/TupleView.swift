@@ -36,13 +36,15 @@ public struct TupleView1<View0: View>: TypeSafeView, View {
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
@@ -58,22 +60,37 @@ public struct TupleView1<View0: View>: TypeSafeView, View {
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -119,26 +136,30 @@ public struct TupleView2<View0: View, View1: View>: TypeSafeView, View {
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
@@ -154,22 +175,37 @@ public struct TupleView2<View0: View, View1: View>: TypeSafeView, View {
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -218,39 +254,45 @@ public struct TupleView3<View0: View, View1: View, View2: View>: TypeSafeView, V
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
@@ -266,22 +308,37 @@ public struct TupleView3<View0: View, View1: View, View2: View>: TypeSafeView, V
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -333,52 +390,60 @@ public struct TupleView4<View0: View, View1: View, View2: View, View3: View>: Ty
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
@@ -394,22 +459,37 @@ public struct TupleView4<View0: View, View1: View, View2: View, View3: View>: Ty
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -466,65 +546,75 @@ public struct TupleView5<View0: View, View1: View, View2: View, View3: View, Vie
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
@@ -540,22 +630,37 @@ public struct TupleView5<View0: View, View1: View, View2: View, View3: View, Vie
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -618,78 +723,90 @@ public struct TupleView6<
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child5.update(
+                computeLayout: { proposedSize, environment in
+                    children.child5.computeLayout(
                         with: view5,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child5.commit()
                 },
                 tag: "\(type(of: view5))"
             )
@@ -705,22 +822,37 @@ public struct TupleView6<
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -786,91 +918,105 @@ public struct TupleView7<
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child5.update(
+                computeLayout: { proposedSize, environment in
+                    children.child5.computeLayout(
                         with: view5,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child5.commit()
                 },
                 tag: "\(type(of: view5))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child6.update(
+                computeLayout: { proposedSize, environment in
+                    children.child6.computeLayout(
                         with: view6,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child6.commit()
                 },
                 tag: "\(type(of: view6))"
             )
@@ -886,22 +1032,37 @@ public struct TupleView7<
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -971,104 +1132,120 @@ public struct TupleView8<
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child5.update(
+                computeLayout: { proposedSize, environment in
+                    children.child5.computeLayout(
                         with: view5,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child5.commit()
                 },
                 tag: "\(type(of: view5))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child6.update(
+                computeLayout: { proposedSize, environment in
+                    children.child6.computeLayout(
                         with: view6,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child6.commit()
                 },
                 tag: "\(type(of: view6))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child7.update(
+                computeLayout: { proposedSize, environment in
+                    children.child7.computeLayout(
                         with: view7,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child7.commit()
                 },
                 tag: "\(type(of: view7))"
             )
@@ -1084,22 +1261,37 @@ public struct TupleView8<
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -1174,117 +1366,135 @@ public struct TupleView9<
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child5.update(
+                computeLayout: { proposedSize, environment in
+                    children.child5.computeLayout(
                         with: view5,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child5.commit()
                 },
                 tag: "\(type(of: view5))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child6.update(
+                computeLayout: { proposedSize, environment in
+                    children.child6.computeLayout(
                         with: view6,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child6.commit()
                 },
                 tag: "\(type(of: view6))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child7.update(
+                computeLayout: { proposedSize, environment in
+                    children.child7.computeLayout(
                         with: view7,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child7.commit()
                 },
                 tag: "\(type(of: view7))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child8.update(
+                computeLayout: { proposedSize, environment in
+                    children.child8.computeLayout(
                         with: view8,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child8.commit()
                 },
                 tag: "\(type(of: view8))"
             )
@@ -1300,22 +1510,37 @@ public struct TupleView9<
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }
@@ -1393,130 +1618,150 @@ public struct TupleView10<
         var layoutableChildren: [LayoutSystem.LayoutableChild] = []
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child0.update(
+                computeLayout: { proposedSize, environment in
+                    children.child0.computeLayout(
                         with: view0,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child0.commit()
                 },
                 tag: "\(type(of: view0))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child1.update(
+                computeLayout: { proposedSize, environment in
+                    children.child1.computeLayout(
                         with: view1,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child1.commit()
                 },
                 tag: "\(type(of: view1))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child2.update(
+                computeLayout: { proposedSize, environment in
+                    children.child2.computeLayout(
                         with: view2,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child2.commit()
                 },
                 tag: "\(type(of: view2))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child3.update(
+                computeLayout: { proposedSize, environment in
+                    children.child3.computeLayout(
                         with: view3,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child3.commit()
                 },
                 tag: "\(type(of: view3))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child4.update(
+                computeLayout: { proposedSize, environment in
+                    children.child4.computeLayout(
                         with: view4,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child4.commit()
                 },
                 tag: "\(type(of: view4))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child5.update(
+                computeLayout: { proposedSize, environment in
+                    children.child5.computeLayout(
                         with: view5,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child5.commit()
                 },
                 tag: "\(type(of: view5))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child6.update(
+                computeLayout: { proposedSize, environment in
+                    children.child6.computeLayout(
                         with: view6,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child6.commit()
                 },
                 tag: "\(type(of: view6))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child7.update(
+                computeLayout: { proposedSize, environment in
+                    children.child7.computeLayout(
                         with: view7,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child7.commit()
                 },
                 tag: "\(type(of: view7))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child8.update(
+                computeLayout: { proposedSize, environment in
+                    children.child8.computeLayout(
                         with: view8,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child8.commit()
                 },
                 tag: "\(type(of: view8))"
             )
         )
         layoutableChildren.append(
             LayoutSystem.LayoutableChild(
-                update: { proposedSize, environment, dryRun in
-                    children.child9.update(
+                computeLayout: { proposedSize, environment in
+                    children.child9.computeLayout(
                         with: view9,
                         proposedSize: proposedSize,
-                        environment: environment,
-                        dryRun: dryRun
+                        environment: environment
                     )
+                },
+                commit: {
+                    children.child9.commit()
                 },
                 tag: "\(type(of: view9))"
             )
@@ -1532,22 +1777,37 @@ public struct TupleView10<
         return group.asWidget(children, backend: backend)
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: Children,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
+        backend: Backend
+    ) -> ViewLayoutResult {
         let group = Group(content: self)
-        return group.update(
+        return group.computeLayout(
             widget,
             children: children,
             proposedSize: proposedSize,
             environment: environment,
-            backend: backend,
-            dryRun: dryRun
+            backend: backend
+        )
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: Children,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        let group = Group(content: self)
+        group.commit(
+            widget,
+            children: children,
+            layout: layout,
+            environment: environment,
+            backend: backend
         )
     }
 }

@@ -42,25 +42,23 @@ public struct EitherView<A: View, B: View>: TypeSafeView, View {
         return backend.createContainer()
     }
 
-    func update<Backend: AppBackend>(
+    func computeLayout<Backend: AppBackend>(
         _ widget: Backend.Widget,
         children: EitherViewChildren<A, B>,
         proposedSize: SIMD2<Int>,
         environment: EnvironmentValues,
-        backend: Backend,
-        dryRun: Bool
-    ) -> ViewUpdateResult {
-        let result: ViewUpdateResult
+        backend: Backend
+    ) -> ViewLayoutResult {
+        let result: ViewLayoutResult
         let hasSwitchedCase: Bool
         switch storage {
             case .a(let a):
                 switch children.node {
                     case let .a(nodeA):
-                        result = nodeA.update(
+                        result = nodeA.computeLayout(
                             with: a,
                             proposedSize: proposedSize,
-                            environment: environment,
-                            dryRun: dryRun
+                            environment: environment
                         )
                         hasSwitchedCase = false
                     case .b:
@@ -70,22 +68,20 @@ public struct EitherView<A: View, B: View>: TypeSafeView, View {
                             environment: environment
                         )
                         children.node = .a(nodeA)
-                        result = nodeA.update(
+                        result = nodeA.computeLayout(
                             with: a,
                             proposedSize: proposedSize,
-                            environment: environment,
-                            dryRun: dryRun
+                            environment: environment
                         )
                         hasSwitchedCase = true
                 }
             case .b(let b):
                 switch children.node {
                     case let .b(nodeB):
-                        result = nodeB.update(
+                        result = nodeB.computeLayout(
                             with: b,
                             proposedSize: proposedSize,
-                            environment: environment,
-                            dryRun: dryRun
+                            environment: environment
                         )
                         hasSwitchedCase = false
                     case .a:
@@ -95,29 +91,36 @@ public struct EitherView<A: View, B: View>: TypeSafeView, View {
                             environment: environment
                         )
                         children.node = .b(nodeB)
-                        result = nodeB.update(
+                        result = nodeB.computeLayout(
                             with: b,
                             proposedSize: proposedSize,
-                            environment: environment,
-                            dryRun: dryRun
+                            environment: environment
                         )
                         hasSwitchedCase = true
                 }
         }
         children.hasSwitchedCase = children.hasSwitchedCase || hasSwitchedCase
 
-        if !dryRun && children.hasSwitchedCase {
+        return result
+    }
+
+    func commit<Backend: AppBackend>(
+        _ widget: Backend.Widget,
+        children: EitherViewChildren<A, B>,
+        layout: ViewLayoutResult,
+        environment: EnvironmentValues,
+        backend: Backend
+    ) {
+        if children.hasSwitchedCase {
             backend.removeAllChildren(of: widget)
             backend.addChild(children.node.widget.into(), to: widget)
             backend.setPosition(ofChildAt: 0, in: widget, to: .zero)
             children.hasSwitchedCase = false
         }
 
-        if !dryRun {
-            backend.setSize(of: widget, to: result.size.size)
-        }
+        _ = children.node.erasedNode.commit()
 
-        return result
+        backend.setSize(of: widget, to: layout.size.size)
     }
 }
 
